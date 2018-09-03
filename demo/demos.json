@@ -1,0 +1,15 @@
+{
+  "name": "Vaadin Incubator Element",
+  "pages": [
+  {
+    "name": "Basics",
+    "url": "incubator-paginator-basic-demos",
+    "src": "incubator-paginator-basic-demos.html",
+    "meta": {
+      "title": "incubator-paginator Basic Examples",
+      "description": "",
+      "image": ""
+     }
+  }
+  ]
+}
