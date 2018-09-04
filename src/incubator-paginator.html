@@ -9,13 +9,58 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 <link rel="import" href="../../polymer/polymer-element.html">
 <link rel="import" href="../../vaadin-themable-mixin/vaadin-themable-mixin.html">
 <link rel="import" href="../../vaadin-element-mixin/vaadin-element-mixin.html">
+<link rel="import" href="../../vaadin-button/vaadin-button.html">
 
 <dom-module id="incubator-paginator">
   <template>
     <style>
+      :host {
+        display: block;
+      }
+
+      [part="navigation"] {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      [part="page-navigators"] {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      [part="first-navigator"] {
+        margin-right: 10px;
+      }
+
+      [part="last-navigator"] {
+        margin-left: 10px;
+      }
+
+      [part="page-navigators"] vaadin-button[selected] {
+        color: var(--lumo-contrast);
+      }
     </style>
 
-    <h1>Hello world</h1>
+    <div part="navigation">
+      <div part="first-navigator">
+        <vaadin-button id="firstPageNavigator" theme="small tertiary" on-click="_goToFirstPage">
+          First
+        </vaadin-button>
+      </div>
+      <div part="page-navigators">
+        <template is="dom-repeat" items="[[_pageTitles]]">
+          <vaadin-button selected$="[[_isPageSelected(currentPage, item)]]" theme="small tertiary" on-click="_setPage">
+            [[item]]
+          </vaadin-button>
+        </template>
+      </div>
+      <div part="last-navigator">
+        <vaadin-button id="lastPageNavigator" theme="small tertiary" on-click="_goToLastPage">
+          Last
+        </vaadin-button>
+      </div>
+    </div>
   </template>
 
   <script>
@@ -34,6 +79,85 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       class IncubatorPaginator extends Vaadin.ElementMixin(Vaadin.ThemableMixin(Polymer.Element)) {
         static get is() {
           return 'incubator-paginator';
+        }
+
+        static get properties() {
+          return {
+            currentPage: {
+              type: Number,
+              value: 1
+            },
+
+            totalPages: {
+              type: Number,
+              value: 1,
+              observer: '_generatePages'
+            },
+
+            _pageTitles: {
+              type: Array,
+              value: () => []
+            }
+          };
+        }
+
+        static get observers() {
+          return [
+            '_generatePages(totalPages)',
+            '_pageChanged(currentPage)'            
+          ]
+        }
+
+        _setPage(e) {
+          this.setPage(e.model.item);
+        }
+
+        _goToLastPage() {
+          this.setPage(this.totalPages);
+        }
+
+        _goToFirstPage() {
+          this.setPage(1);
+        }
+
+        setPage(val) {
+          this.set('currentPage', val);
+        }
+
+        _pageChanged(val) {
+          if (val === 1) {
+            this.$.firstPageNavigator.setAttribute('disabled', true);
+          } else if (this.$.firstPageNavigator.hasAttribute('disabled')) {
+            this.$.firstPageNavigator.removeAttribute('disabled')
+          }
+          if (val === this.totalPages) {
+            this.$.lastPageNavigator.setAttribute('disabled', true);
+          } else if (this.$.lastPageNavigator.hasAttribute('disabled')) {
+            this.$.lastPageNavigator.removeAttribute('disabled')
+          }
+        }
+
+        _generatePages(val) {
+          this.set('_pageTitles', []);
+          for (let i = 1; i <= val; i++) {
+            this.push('_pageTitles', i);
+          }
+        }
+
+        _isCurrentPage(val) {
+          return parseInt(val) === this.currentPage;
+        }
+
+        _isTheLastPage() {
+          return this.currentPage === this.totalPages;
+        }
+
+        _isTheFirstPage() {
+          return this.currentPage === 1;
+        }
+
+        _isPageSelected(currentPage, val) {
+          return val === currentPage;
         }
       }
 

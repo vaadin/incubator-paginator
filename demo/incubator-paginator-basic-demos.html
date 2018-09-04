@@ -3,14 +3,22 @@
     <style include="vaadin-component-demo-shared-styles">
       :host {
         display: block;
-      }
+      }      
     </style>
 
     <h3>Demo sample</h3>
     <vaadin-demo-snippet id="incubator-paginator-demo-sample">
       <template preserve-content>
-        <incubator-paginator>
-        </incubator-paginator>
+        <style>
+          div#paginator-container {
+            width: 300px;
+            margin: 0 auto;
+          }
+        </style>
+        <div id="paginator-container">
+          <incubator-paginator total-pages="15" current-page="3">
+          </incubator-paginator>
+        </div>
       </template>
     </vaadin-demo-snippet>
 
