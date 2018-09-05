@@ -136,7 +136,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
             this.$.lastPageNavigator.removeAttribute('disabled')
           }
 
-          this.dispatchEvent(new CustomEvent('page-change', {
+          this.dispatchEvent(new CustomEvent('incubator-paginator-page-change', {
             detail: {
               page: this.currentPage
             }

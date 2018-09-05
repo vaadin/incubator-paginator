@@ -28,7 +28,7 @@
             const paginator = document.querySelector('#my-paginator');
             const selectedPageLabel = document.querySelector('#selected-page');
             selectedPageLabel.innerText = paginator.currentPage;
-            paginator.addEventListener('page-change', (e) => {
+            paginator.addEventListener('incubator-paginator-page-change', (e) => {
               selectedPageLabel.innerText = e.detail.page;
             })
           })
