@@ -3,21 +3,16 @@
 
 # &lt;incubator-paginator&gt;
 
-[Live Demo ↗](https://vaadin.com/directory/component/vaadinincubator-element/html-examples)
-|
-[API documentation ↗](https://vaadin.com/directory/component/vaadinincubator-element/html-api)
+[Live Demo ↗](https://incubator.app.fi/incubator-breadcrumb-demo)
 
-
-[&lt;incubator-paginator&gt;](https://vaadin.com/directory/component/vaadinincubator-element) is a Web Component providing an easy way to ask the user to confirm a choice, part of the [Vaadin components](https://vaadin.com/components).
+[&lt;incubator-paginator&gt;](https://vaadin.com/directory/component/vaadinincubator-paginator) is a Web Component providing an easy way to display a full functioning paginator on a webpage.
 
 ```html
-  <incubator-paginator header="Unsaved changes" confirm-text="Save" on-confirm="save"
-    cancel on-cancel="cancel" reject reject-text="Discard" on-reject="discard">
-    Do you want to save or discard your changes before navigating away?
+  <incubator-paginator id="my-paginator" total-pages="15" current-page="3">
   </incubator-paginator>
 ```
 
-[<img src="https://raw.githubusercontent.com/vaadin/incubator-paginator/master/screenshot.png" width="200" alt="Screenshot of incubator-paginator">](https://vaadin.com/directory/component/vaadinincubator-element)
+[<img src="https://raw.githubusercontent.com/vaadin/incubator-paginator/master/screenshot.png" width="200" alt="Screenshot of incubator-paginator">](https://vaadin.com/directory/component/vaadinincubator-paginator)
 
 
 ## Installation
