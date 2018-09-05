@@ -41,7 +41,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
     <div part="navigation">
       <div part="first-navigator">
         <vaadin-button id="firstPageNavigator" theme="small tertiary" on-click="_goToFirstPage">
-          First
+          [[firstLabel]]
         </vaadin-button>
       </div>
       <div part="page-navigators">
@@ -53,7 +53,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       </div>
       <div part="last-navigator">
         <vaadin-button id="lastPageNavigator" theme="small tertiary" on-click="_goToLastPage">
-          Last
+          [[lastLabel]]
         </vaadin-button>
       </div>
     </div>
@@ -93,6 +93,16 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
             _pageTitles: {
               type: Array,
               value: () => []
+            },
+
+            firstLabel: {
+              type: String,
+              value: 'First'
+            },
+
+            lastLabel: {
+              type: String,
+              value: 'Last'
             }
           };
         }
