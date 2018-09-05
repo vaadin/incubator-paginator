@@ -111,7 +111,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           return [
             '_generatePages(totalPages)',
             '_pageChanged(currentPage)'
-          ]
+          ];
         }
 
         _setPage(e) {
@@ -134,12 +134,12 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           if (val === 1) {
             this.$.firstPageNavigator.setAttribute('disabled', true);
           } else if (this.$.firstPageNavigator.hasAttribute('disabled')) {
-            this.$.firstPageNavigator.removeAttribute('disabled')
+            this.$.firstPageNavigator.removeAttribute('disabled');
           }
           if (val === this.totalPages) {
             this.$.lastPageNavigator.setAttribute('disabled', true);
           } else if (this.$.lastPageNavigator.hasAttribute('disabled')) {
-            this.$.lastPageNavigator.removeAttribute('disabled')
+            this.$.lastPageNavigator.removeAttribute('disabled');
           }
 
           this.dispatchEvent(new CustomEvent('incubator-paginator-page-change', {
