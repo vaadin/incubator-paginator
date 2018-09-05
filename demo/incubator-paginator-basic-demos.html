@@ -3,7 +3,7 @@
     <style include="vaadin-component-demo-shared-styles">
       :host {
         display: block;
-      }      
+      }
     </style>
 
     <h3>Demo sample</h3>
@@ -15,10 +15,24 @@
             margin: 0 auto;
           }
         </style>
+
+        <p>Selected page: <span id="selected-page"></span></p>
+
         <div id="paginator-container">
-          <incubator-paginator total-pages="15" current-page="3">
+          <incubator-paginator id="my-paginator" total-pages="15" current-page="3">
           </incubator-paginator>
         </div>
+
+        <script>
+          window.addDemoReadyListener('#incubator-paginator-demo-sample', (document) => {
+            const paginator = document.querySelector('#my-paginator');
+            const selectedPageLabel = document.querySelector('#selected-page');
+            selectedPageLabel.innerText = paginator.currentPage;
+            paginator.addEventListener('page-change', (e) => {
+              selectedPageLabel.innerText = e.detail.page;
+            })
+          })
+        </script>
       </template>
     </vaadin-demo-snippet>
 

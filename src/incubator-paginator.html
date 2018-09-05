@@ -104,7 +104,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         static get observers() {
           return [
             '_generatePages(totalPages)',
-            '_pageChanged(currentPage)'            
+            '_pageChanged(currentPage)'
           ]
         }
 
@@ -135,6 +135,12 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           } else if (this.$.lastPageNavigator.hasAttribute('disabled')) {
             this.$.lastPageNavigator.removeAttribute('disabled')
           }
+
+          this.dispatchEvent(new CustomEvent('page-change', {
+            detail: {
+              page: this.currentPage
+            }
+          }));
         }
 
         _generatePages(val) {
