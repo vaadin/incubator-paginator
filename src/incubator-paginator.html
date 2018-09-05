@@ -140,10 +140,12 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         _generatePages(val) {
-          this.set('_pageTitles', []);
+          const pageTitles = [];
           for (let i = 1; i <= val; i++) {
-            this.push('_pageTitles', i);
+            pageTitles.push(i);
           }
+
+          this.set('_pageTitles', pageTitles);
         }
 
         _isCurrentPage(val) {
