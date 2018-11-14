@@ -46,7 +46,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       </div>
       <div part="page-navigators">
         <template is="dom-repeat" items="[[_pageTitles]]" as="pageLabel">
-          <vaadin-button selected$="[[_isPageSelected(pageLabel, currentPage)]]" theme="small tertiary" on-click="_setPage">
+          <vaadin-button selected$="[[_isPageSelected(pageLabel, currentPage)]]" theme="small tertiary" on-click="_setPage" disabled$="[[_isDotPage(pageLabel)]]">
             [[pageLabel]]
           </vaadin-button>
         </template>
@@ -81,12 +81,20 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           return {
             currentPage: {
               type: Number,
-              value: 1
+              value: 1,
+              observer: '_pageChanged'
             },
 
             totalPages: {
               type: Number,
               value: 1,
+              observer: '_generatePages'
+            },
+            
+            truncation: {
+              type: Boolean,
+              value: false,
+              reflectToAttribute: true,
               observer: '_generatePages'
             },
 
@@ -107,13 +115,6 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           };
         }
 
-        static get observers() {
-          return [
-            '_generatePages(totalPages)',
-            '_pageChanged(currentPage)'
-          ];
-        }
-
         _setPage(e) {
           this.setPage(e.model.pageLabel);
         }
@@ -130,18 +131,21 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           this.set('currentPage', val);
         }
 
-        _pageChanged(val) {
-          if (val === 1) {
+        _pageChanged() {
+          if (this.currentPage === 1) {
             this.$.firstPageNavigator.setAttribute('disabled', true);
           } else if (this.$.firstPageNavigator.hasAttribute('disabled')) {
             this.$.firstPageNavigator.removeAttribute('disabled');
           }
-          if (val === this.totalPages) {
+          if (this.currentPage === this.totalPages) {
             this.$.lastPageNavigator.setAttribute('disabled', true);
           } else if (this.$.lastPageNavigator.hasAttribute('disabled')) {
             this.$.lastPageNavigator.removeAttribute('disabled');
           }
-
+          
+          if (this.truncation) {
+            this._generatePages();
+          }
           this.dispatchEvent(new CustomEvent('incubator-paginator-page-change', {
             detail: {
               page: this.currentPage
@@ -149,13 +153,8 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           }));
         }
 
-        _generatePages(val) {
-          const pageTitles = [];
-          for (let i = 1; i <= val; i++) {
-            pageTitles.push(i);
-          }
-
-          this.set('_pageTitles', pageTitles);
+        _generatePages() {
+          this.set('_pageTitles', this.truncation ? this._truncatedPagination(this.currentPage,this.totalPages) : this._allPagination(this.totalPages));
         }
 
         _isCurrentPage(val) {
@@ -173,7 +172,53 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         _isPageSelected(pageLabel, currentPage) {
           return pageLabel === currentPage;
         }
+
+        _allPagination(totalPages) {
+          const pageTitles = [];
+
+          for (let i = 1; i <= totalPages; i++) {
+              pageTitles.push(i);
+            }
+          return pageTitles;
+        }
+
+        _truncatedPagination(c, m) {
+          var current = c,
+              last = m,
+              delta = 2,
+              left = current - delta,
+              right = current + delta + 1,
+              range = [],
+              rangeWithDots = [],
+              l;
+
+          for (let i = 1; i <= last; i++) {
+              if (i == 1 || i == last || i >= left && i < right) {
+                  range.push(i);
+              }
+          }
+
+          for (let i of range) {
+              if (l) {
+                  if (i - l === 2) {
+                      rangeWithDots.push(l + 1);
+                  } else if (i - l !== 1) {
+                      rangeWithDots.push('...');
+                  }
+              }
+              rangeWithDots.push(i);
+              l = i;
+            }
+            
+          return rangeWithDots;
+        }
+
+        _isDotPage(index) {
+          return index == '...';
+        }
       }
+
+      
 
       customElements.define(IncubatorPaginator.is, IncubatorPaginator);
 
