@@ -182,18 +182,16 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           return pageTitles;
         }
 
-        _truncatedPagination(c, m) {
-          var current = c,
-              last = m,
-              delta = 2,
-              left = current - delta,
-              right = current + delta + 1,
+        _truncatedPagination(currentPage, lastPage) {
+          let delta = 2,
+              left = currentPage - delta,
+              right = currentPage + delta + 1,
               range = [],
               rangeWithDots = [],
               l;
 
-          for (let i = 1; i <= last; i++) {
-              if (i == 1 || i == last || i >= left && i < right) {
+          for (let i = 1; i <= lastPage; i++) {
+              if (i == 1 || i == lastPage || i >= left && i < right) {
                   range.push(i);
               }
           }
