@@ -154,7 +154,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         _generatePages() {
-          this.set('_pageTitles', this.truncation ? this._truncatedPagination(this.currentPage,this.totalPages) : this._allPagination(this.totalPages));
+          this.set('_pageTitles', this.truncation ? this._truncatedPages(this.currentPage,this.totalPages) : this._allPages(this.totalPages));
         }
 
         _isCurrentPage(val) {
@@ -173,7 +173,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           return pageLabel === currentPage;
         }
 
-        _allPagination(totalPages) {
+        _allPages(totalPages) {
           const pageTitles = [];
 
           for (let i = 1; i <= totalPages; i++) {
@@ -182,7 +182,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           return pageTitles;
         }
 
-        _truncatedPagination(currentPage, lastPage) {
+        _truncatedPages(currentPage, lastPage) {
           let delta = 2,
               left = currentPage - delta,
               right = currentPage + delta + 1,
