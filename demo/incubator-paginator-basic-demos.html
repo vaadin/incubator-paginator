@@ -6,12 +6,12 @@
       }
     </style>
 
-    <h3>Demo sample</h3>
+    <h3>Paginator - All pages</h3>
     <vaadin-demo-snippet id="incubator-paginator-demo-sample">
       <template preserve-content>
         <style>
           div#paginator-container {
-            width: 300px;
+            width: 350px;
             margin: 0 auto;
           }
         </style>
@@ -36,6 +36,35 @@
       </template>
     </vaadin-demo-snippet>
 
+    <h3>Paginator - Truncation</h3>
+    <vaadin-demo-snippet id="incubator-paginator-demo-truncation">
+      <template preserve-content>
+        <style>
+          div#paginator-container {
+            width: 350px;
+            margin: 0 auto;
+          }
+        </style>
+
+        <p>Selected page: <span id="selected-page"></span></p>
+
+        <div id="paginator-container">
+          <incubator-paginator id="my-paginator" total-pages="15" current-page="3" truncation>
+          </incubator-paginator>
+        </div>
+
+        <script>
+          window.addDemoReadyListener('#incubator-paginator-demo-truncation', (document) => {
+            const paginator = document.querySelector('#my-paginator');
+            const selectedPageLabel = document.querySelector('#selected-page');
+            selectedPageLabel.innerText = paginator.currentPage;
+            paginator.addEventListener('incubator-paginator-page-change', (e) => {
+              selectedPageLabel.innerText = e.detail.page;
+            });
+          });
+        </script>
+      </template>
+    </vaadin-demo-snippet>
   </template>
   <script>
     class IncubatorPaginatorBasicDemos extends DemoReadyEventEmitter(ElementDemo(Polymer.Element)) {
