@@ -1,3 +1,6 @@
+# Deprecated 
+This repository has been deprecated. Please find the latest code here: https://github.com/vaadin-component-factory/vcf-paginator
+
 [![Build Status](https://travis-ci.org/vaadin/incubator-paginator.svg?branch=master)](https://travis-ci.org/vaadin/incubator-paginator)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vaadin/web-components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
